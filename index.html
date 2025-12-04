@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footer: Edison - Animated Tea Banner</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f9f9f9;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+    }
+
+    /* Your existing header styles remain unchanged */
+    .mainHeader,
+    .backBtn,
+    .viewChanger,
+    .desktopIconDiv,
+    .mobileIconDiv {
+      /* keep your styles */
+    }
+
+    /* THE EDISON FOOTER BANNER */
+    .edison-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 250px;
+      overflow: hidden;
+      z-index: 999;
+    }
+
+    .banner-content {
+      position: absolute;
+      top: 0;
+      left: -100vw;
+      width: 100vw;
+      height: 100%;
+      background: linear-gradient(90deg, #0a1828, #112a44, #1e3f66);
+      background-size: 300% 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 90px;
+      color: white;
+      overflow: hidden;
+    }
+
+    .building-img {
+      height: 340px;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .left-text {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: 6px;
+      margin-left: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .left-text span {
+      font-size: 34px;
+      letter-spacing: 10px;
+      display: block;
+      margin-top: 4px;
+      opacity: 0.9;
+    }
+
+    /* Redesigned center text with beautiful styling */
+    .center-text {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.1;
+      text-shadow: 0 6px 30px rgba(0, 0, 0, 0.8);
+      padding: 20px 40px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .center-text::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: shimmer 3s infinite;
+      z-index: 1;
+    }
+
+    .center-text small {
+      font-size: 20px;
+      display: block;
+      margin-top: 8px;
+      opacity: 0.95;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    /* Floating tea leaves animation */
+    .tea-leaves {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .tea-leaf {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%234CAF50" d="M50,15 Q65,10 75,25 Q85,40 80,60 Q75,80 60,85 Q45,90 30,80 Q15,70 15,50 Q15,30 30,20 Q45,10 50,15 Z" opacity="0.7"/></svg>');
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.7;
+    }
+
+    /* Animated gradient background */
+    .animated-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg,
+          rgba(10, 24, 40, 0.9) 0%,
+          rgba(17, 42, 68, 0.9) 25%,
+          rgba(30, 63, 102, 0.9) 50%,
+          rgba(17, 42, 68, 0.9) 75%,
+          rgba(10, 24, 40, 0.9) 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+      z-index: 0;
+    }
+
+    /* Right side decoration */
+    .right-decoration {
+      position: absolute;
+      right: 90px;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: right;
+      z-index: 2;
+    }
+
+    .steam {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 20px;
+      margin-left: auto;
+    }
+
+    .steam-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      filter: blur(8px);
+    }
+
+    /* Pulsing CTA button */
+    .cta-button {
+      background: linear-gradient(90deg, #00c9ff, #92fe9d);
+      border: none;
+      color: #0a1828;
+      padding: 15px 35px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 201, 255, 0.3);
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+      margin-top: 10px;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 201, 255, 0.5);
+    }
+
+    /* Keyframe animations */
+    @keyframes shimmer {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 10px 30px rgba(0, 201, 255, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 10px 40px rgba(0, 201, 255, 0.6);
+      }
+
+      100% {
+        box-shadow: 0 10px 30px rgba(0, 201, 255, 0.3);
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(10deg);
+      }
+    }
+
+    @keyframes steamRise {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: translateY(-100px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1200px) {
+      .banner-content {
+        padding: 0 50px;
+      }
+
+      .left-text {
+        font-size: 36px;
+      }
+
+      .left-text span {
+        font-size: 26px;
+      }
+
+      .center-text {
+        font-size: 32px;
+        padding: 15px 25px;
+      }
+
+      .center-text small {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .edison-banner {
+        height: 200px;
+      }
+
+      .building-img {
+        height: 240px;
+      }
+
+      .center-text {
+        font-size: 24px;
+        padding: 10px 15px;
+      }
+
+      .center-text small {
+        font-size: 14px;
+      }
+
+      .left-text {
+        font-size: 28px;
+      }
+
+      .left-text span {
+        font-size: 20px;
+      }
+
+      .cta-button {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body style="display:none;">
+
+  <!-- Your existing header -->
+  <div class="mainHeader">...</div>
+
+  <!-- Dummy news content so you can scroll -->
+  <div style="height:200vh; padding:20px; font-size:18px; line-height:1.8; color:#333;">
+    <h1 style="text-align:center; margin:100px 0; color:#555;">Scroll down to see the Edison footer banner in action
+    </h1>
+    <p style="max-width:800px; margin:0 auto; padding:20px;">Experience the beauty of our animated tea banner. As you
+      scroll down, the banner will slide into view with elegant animations that highlight the essence of Sreemangal's
+      original tea. The design features floating tea leaves, a shimmering text effect, and a pulsating call-to-action
+      button that invites you to explore our authentic tea collection.</p>
+  </div>
+
+  <!-- EDISON FOOTER BANNER -->
+  <div class="edison-banner">
+    <div class="banner-content" id="bannerContent">
+      <!-- Animated background -->
+      <div class="animated-bg"></div>
+
+      <!-- Floating tea leaves -->
+      <div class="tea-leaves" id="teaLeaves"></div>
+
+      <div class="left-text">
+        শ্রীমঙ্গল<br><span>অরিজিনাল চা</span>
+      </div>
+
+      <div class="center-text">
+        আসল চায়ের স্বাদ
+        <small>
+          ১০০% খাঁটি পাহাড়ি চা<br>
+          সুগন্ধি • তাজা • প্রাকৃতিক
+        </small>
+        <button class="cta-button" onclick="window.open('https://www.teashop.com.bd', '_blank')">
+          <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">local_cafe</span>
+          চায়ের স্বাদ নিন
+        </button>
+
+      </div>
+
+
+      <img src="./asset/1.jpg" alt="Original Sreemangal Tea" class="building-img" id="building">
+
+      <!-- Right side decoration with steam animation -->
+      <div class="right-decoration">
+        <div class="steam" id="steamContainer"></div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+  <script>
+    // Your existing anti-right-click & devtools code...
+
+    // EDISON BANNER ANIMATION
+    const banner = document.getElementById('bannerContent');
+    const building = document.getElementById('building');
+    const teaLeaves = document.getElementById('teaLeaves');
+    const steamContainer = document.getElementById('steamContainer');
+
+    // Create floating tea leaves
+    function createTeaLeaves() {
+      for (let i = 0; i < 15; i++) {
+        const leaf = document.createElement('div');
+        leaf.classList.add('tea-leaf');
+
+        // Random position
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        const size = 20 + Math.random() * 30;
+        const delay = Math.random() * 5;
+        const duration = 3 + Math.random() * 4;
+
+        leaf.style.left = `${left}%`;
+        leaf.style.top = `${top}%`;
+        leaf.style.width = `${size}px`;
+        leaf.style.height = `${size}px`;
+        leaf.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+
+        teaLeaves.appendChild(leaf);
+      }
+    }
+
+    // Create steam animation
+    function createSteam() {
+      for (let i = 0; i < 5; i++) {
+        const steam = document.createElement('div');
+        steam.classList.add('steam-circle');
+
+        const size = 30 + Math.random() * 40;
+        const left = 40 + Math.random() * 40;
+        const delay = i * 0.8;
+        const duration = 3 + Math.random() * 2;
+
+        steam.style.width = `${size}px`;
+        steam.style.height = `${size}px`;
+        steam.style.left = `${left}%`;
+        steam.style.animation = `steamRise ${duration}s ease-out ${delay}s infinite`;
+
+        steamContainer.appendChild(steam);
+      }
+    }
+
+    // Scroll animation for banner
+    window.addEventListener('scroll', () => {
+      const scroll = window.scrollY;
+      const start = 200;
+      const end = 1000;
+
+      if (scroll < start) {
+        banner.style.left = '-100vw';
+        building.style.transform = 'translateX(0)';
+      } else if (scroll < end) {
+        const progress = (scroll - start) / (end - start);
+        const move = progress * 100;
+        banner.style.left = `${-96 + move}vw`;
+
+        if (progress > 0.65) {
+          const extra = (progress - 0.65) / 0.35;
+          building.style.transform = `translateX(${extra * 90}px)`;
+        }
+      } else {
+        banner.style.left = '0vw';
+        building.style.transform = 'translateX(90px)';
+      }
+    });
+
+    const scroll = window.scrollY;
+    const start = 200;
+    const end = 1000;
+
+    if (scroll < start) {
+      banner.style.left = '-100vw';
+      building.style.transform = 'translateX(0)';
+    } else if (scroll < end) {
+      const progress = (scroll - start) / (end - start);
+      const move = progress * 100;
+      banner.style.left = `${-96 + move}vw`;
+
+      if (progress > 0.65) {
+        const extra = (progress - 0.65) / 0.35;
+        building.style.transform = `translateX(${extra * 200}px)`;
+      }
+    } else {
+      banner.style.left = '0vw';
+      building.style.transform = 'translateX(200px)';
+    }
+
+
+    // Initialize animations
+    createTeaLeaves();
+    createSteam();
+
+    // Auto-show body after load
+    document.body.style.display = 'block';
+
+    // Add continuous subtle animation to the center text
+    gsap.to('.center-text', {
+      y: -5,
+      duration: 2,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut"
+    });
+  </script>
+</body>
+
+</html>
